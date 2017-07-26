@@ -1,0 +1,25 @@
+{
+  "name": "theprivateer/domainr",
+  "description": "A PHP wrapper for the Domainr API.",
+  "authors" : [{
+    "name" : "Phil Stephens",
+    "email" : "emailtheprivateer@gmail.com"
+  }
+  ],
+  "keywords" : [
+    "Domainr", "API"
+  ],
+  "homepage" : "https://github.com/theprivateer/domainr",
+  "license" : [
+    "MIT"
+  ],
+  "require": {
+    "php": ">=5.5.9",
+    "guzzlehttp/guzzle": "^6.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Privateer\\Domainr\\": "src/"
+    }
+  }
+}
