@@ -2,24 +2,26 @@
 
 namespace Privateer\Domainr;
 
-
 use GuzzleHttp\Client;
 
 class Domainr
 {
     protected $key;
     protected $client;
+    protected $base_uri = 'https://domainr.p.mashape.com';
 
     /**
      * Domainr constructor.
      * @param $key
      * @param $base_uri
      */
-    public function __construct($key, $base_uri)
+    public function __construct($key, $base_uri = null)
     {
-        $this->key     = $key;
+        $this->key = $key;
+        if($base_uri) $this->base_uri = $base_uri;
+
         $this->client  = new Client([
-            "base_uri" => $base_uri
+            'base_uri' => $this->base_uri
         ]);
     }
 
@@ -32,15 +34,15 @@ class Domainr
      */
     public function search($query, $location = null, $registrar = null, $defaults = null)
     {
-        $result = $this->client->request("GET", "/v2/search", [
-            "query" => [
-                "query" => $query,
-                "location" => $location,
-                "registrar" => $registrar,
-                "defaults" => $defaults,
-                "mashape-key" => $this->key,
+        $result = $this->client->request('GET', '/v2/search', [
+            'query' => [
+                'query' => $query,
+                'location' => $location,
+                'registrar' => $registrar,
+                'defaults' => $defaults,
+                'mashape-key' => $this->key,
             ],
-            "allow_redirects" => false,
+            'allow_redirects' => false,
         ]);
 
         return json_decode($result->getBody()->getContents())->results;
@@ -53,16 +55,16 @@ class Domainr
      */
     public function register($domain, $registrar = null)
     {
-        $result = $this->client->request('GET', "/v2/register", [
-            "query" => [
-                "domain" => $domain,
-                "registrar" => $registrar,
-                "mashape-key" => $this->key,
+        $result = $this->client->request('GET', '/v2/register', [
+            'query' => [
+                'domain' => $domain,
+                'registrar' => $registrar,
+                'mashape-key' => $this->key,
             ],
-            "allow_redirects" => false,
+            'allow_redirects' => false,
         ]);
 
-        return $result->getHeader("location")[0];
+        return $result->getHeader('location')[0];
     }
 
     /**
@@ -71,12 +73,12 @@ class Domainr
      */
     public function status($domain)
     {
-        $result = $this->client->request("GET", "/v2/status", [
-            "query" => [
-                "domain" => $domain,
-                "mashape-key" => $this->key,
+        $result = $this->client->request('GET', '/v2/status', [
+            'query' => [
+                'domain' => $domain,
+                'mashape-key' => $this->key,
             ],
-            "allow_redirects" => false,
+            'allow_redirects' => false,
         ]);
 
         return new Status(json_decode($result->getBody()->getContents())->status);
