@@ -42,7 +42,7 @@ class Domainr
             ],
             "allow_redirects" => false,
         ]);
-        
+
         return json_decode($result->getBody()->getContents())->results;
     }
 
@@ -79,7 +79,7 @@ class Domainr
             "allow_redirects" => false,
         ]);
 
-        return json_decode($result->getBody()->getContents())->status;
+        return new Status(json_decode($result->getBody()->getContents())->status);
     }
 
 
