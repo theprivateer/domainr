@@ -36,13 +36,13 @@ class Domainr
     {
         $result = $this->client->request('GET', '/v2/search', [
             'query' => [
-                'query' => $query,
-                'location' => $location,
-                'registrar' => $registrar,
-                'defaults' => $defaults,
-                'mashape-key' => $this->key,
+                'query'         => $query,
+                'location'      => $location,
+                'registrar'     => $registrar,
+                'defaults'      => $defaults,
+                'mashape-key'   => $this->key,
             ],
-            'allow_redirects' => false,
+            'allow_redirects'   => false,
         ]);
 
         return json_decode($result->getBody()->getContents())->results;
@@ -57,11 +57,11 @@ class Domainr
     {
         $result = $this->client->request('GET', '/v2/register', [
             'query' => [
-                'domain' => $domain,
-                'registrar' => $registrar,
-                'mashape-key' => $this->key,
+                'domain'        => $domain,
+                'registrar'     => $registrar,
+                'mashape-key'   => $this->key,
             ],
-            'allow_redirects' => false,
+            'allow_redirects'   => false,
         ]);
 
         return $result->getHeader('location')[0];
@@ -75,10 +75,10 @@ class Domainr
     {
         $result = $this->client->request('GET', '/v2/status', [
             'query' => [
-                'domain' => $domain,
-                'mashape-key' => $this->key,
+                'domain'        => $domain,
+                'mashape-key'   => $this->key,
             ],
-            'allow_redirects' => false,
+            'allow_redirects'   => false,
         ]);
 
         return new Status(json_decode($result->getBody()->getContents())->status);
